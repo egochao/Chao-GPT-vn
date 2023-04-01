@@ -10,8 +10,8 @@ export let defaultPromptList: Prompt[] = [
         "model": {
           "id": "GPT-3.5",
           "name": "OpenAI GPT-3.5",
-          "maxLength": 1024,
-          "tokenLimit": 1024
+          "maxLength": 150,
+          "tokenLimit": 256
         },
         "folderId": null
     },
@@ -23,8 +23,8 @@ export let defaultPromptList: Prompt[] = [
         "model": {
             "id": "GPT-3.5",
             "name": "OpenAI GPT-3.5",
-            "maxLength": 1024,
-            "tokenLimit": 1024
+            "maxLength": 150,
+            "tokenLimit": 256
           },
         "folderId": null  
     },
@@ -36,8 +36,8 @@ export let defaultPromptList: Prompt[] = [
         "model": {
             "id": "GPT-3.5",
             "name": "OpenAI GPT-3.5",
-            "maxLength": 1024,
-            "tokenLimit": 1024
+            "maxLength": 150,
+            "tokenLimit": 256
         },
         "folderId": null  
     },
@@ -49,8 +49,8 @@ export let defaultPromptList: Prompt[] = [
         "model": {
             "id": "GPT-3.5",
             "name": "OpenAI GPT-3.5",
-            "maxLength": 1024,
-            "tokenLimit": 1024
+            "maxLength": 150,
+            "tokenLimit": 256
           },
         "folderId": null  
     },
@@ -62,8 +62,8 @@ export let defaultPromptList: Prompt[] = [
         "model": {
             "id": "GPT-3.5",
             "name": "OpenAI GPT-3.5",
-            "maxLength": 1024,
-            "tokenLimit": 1024
+            "maxLength": 150,
+            "tokenLimit": 256
           },
         "folderId": null  
     }
