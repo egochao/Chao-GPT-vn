@@ -6,6 +6,10 @@ export const SaveHistoryAPI = async (
   userId: string,
   messages: Message[],
 ) => {
+  if (!process.env.HISTORY_API || !process.env.API_KEY) {
+    throw new Error("Missing HISTORY_API env");
+  }
+
   // extract 2 last messages
   const lastTwoMessages = messages.slice(-2);
   const url = process.env.HISTORY_API as string;
