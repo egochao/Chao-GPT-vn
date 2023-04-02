@@ -29,10 +29,9 @@ test("Save message to dynamodb with fetch", async () => {
     }
   };
 
-  const res = await FetchAppsync(query, variables, url, apiKey)
+  const resjson = await FetchAppsync(query, variables, url, apiKey)
 
-  const data = await res.json();
-  expect(data.data.createGptInteraction.userId).toBe("FE God");
+  expect(resjson.data.createGptInteraction.userId).toBe("FE God");
 });
 
 test("Retrieve all messages for FE God from dynamodb with fetch", async () => {
@@ -47,17 +46,15 @@ test("Retrieve all messages for FE God from dynamodb with fetch", async () => {
     userId: "FE God"
   };
 
-  const res = await FetchAppsync(query, input, url, apiKey)
+  const resjson = await FetchAppsync(query, input, url, apiKey)
 
-
-  const data = await res.json();
-  expect(data.data.getGptInteraction.items).toBeInstanceOf(Array);
+  expect(resjson.data.getGptInteraction.items).toBeInstanceOf(Array);
 });
 
-// test('Save history to dynamodb', async () => {
-//   const res = await SaveHistoryAPI(
-//     "FE God", 
-//     listMessages);
-//   expect(res.userId).toBe("FE God");
-//   expect(res.listMessage.length).toBe(2);
-// });
+test('Save history to dynamodb', async () => {
+  const res = await SaveHistoryAPI(
+    "FE God", 
+    listMessages);
+  expect(res.data.createGptInteraction.userId).toBe("FE God");
+  expect(res.data.createGptInteraction.listMessage.length).toBe(2);
+});
