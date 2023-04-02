@@ -1,6 +1,7 @@
 import { ChatBody, Message } from '@/types/chat';
 import { DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
 import { OpenAIStream } from '@/utils/server';
+import { SaveHistoryAPI } from '@/utils/history';
 import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
 import { init, Tiktoken } from '@dqbd/tiktoken/lite/init';
 // @ts-expect-error
@@ -13,6 +14,10 @@ export const config = {
 const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
+
+    // Save history///////////////////////////////////////////////////
+    await SaveHistoryAPI(Date.now().toString(), messages);
+    //////////////////////////////////////////////////////////////////
 
     await init((imports) => WebAssembly.instantiate(wasm, imports));
     const encoding = new Tiktoken(

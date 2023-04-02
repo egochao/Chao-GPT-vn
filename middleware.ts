@@ -15,7 +15,7 @@ export function middleware(req: NextRequest) {
   if (!req.geo) {
       return NextResponse.next()
   }
-  const country = req.geo.country || 'US'
+  const country = req.geo.country || process.env.GEO || 'US'
   // Specify the correct pathname
   if (country === ALLOWED_COUNTRY) {
       req.nextUrl.pathname = `/`
