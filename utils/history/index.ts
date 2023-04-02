@@ -1,7 +1,9 @@
 import { Message } from '@/types/chat';
 import { API, graphqlOperation } from 'aws-amplify';
-import { createGptInteraction } from './graphql-ops';
+import { createGptInteraction, initAppsync } from './graphql-ops';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
+
+initAppsync()
 
 export const SaveHistoryAPI = async (
   userId: string,
