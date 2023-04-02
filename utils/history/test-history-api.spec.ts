@@ -22,20 +22,20 @@ test('Create new hoigpt row in dynamodb', async () => {
   const res = await (API.graphql(graphqlOperation(createGptInteraction,
     {
       input: {
-        userId: "God",
+        userId: "FE God",
         listMessage: listMessages,
         messageId: epoch_time_now.toString(),
       }
     }
   )) as Promise<GraphQLResult<any>>);
-  expect(res.data.createGptInteraction.userId).toBe("God");
+  expect(res.data.createGptInteraction.userId).toBe("FE God");
 });
 
 
 
 test('Get all God user hoigpt chat', async () => {
   const res = await (API.graphql(graphqlOperation(getGptInteraction,
-    { userId: "God" }
+    { userId: "FE God" }
   )) as Promise<GraphQLResult<any>>);
   expect(res.data.getGptInteraction.items).toBeInstanceOf(Array);
 });
@@ -43,8 +43,8 @@ test('Get all God user hoigpt chat', async () => {
 
 test('Save history to dynamodb', async () => {
   const res = await SaveHistoryAPI(
-    "God", 
+    "FE God", 
     listMessages);
-  expect(res.userId).toBe("God");
+  expect(res.userId).toBe("FE God");
   expect(res.listMessage.length).toBe(2);
 });
