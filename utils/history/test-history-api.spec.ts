@@ -5,15 +5,7 @@ import { createGptInteraction, getGptInteraction, initAppsync } from './graphql-
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
-const awsconfig = {
-  "aws_project_region": "ap-southeast-1",
-  "aws_appsync_graphqlEndpoint": process.env.HISTORY_API,
-  "aws_appsync_region": "ap-southeast-1",
-  "aws_appsync_authenticationType": "API_KEY",
-  "aws_appsync_apiKey": process.env.API_KEY
-};
-
-Amplify.configure(awsconfig);  
+initAppsync()  
 
 const listMessages = [
   { role: "system", content: "You are a helpful assistant, trying to teach a beginner about english speaking." },
