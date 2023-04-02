@@ -53,7 +53,7 @@ test("Retrieve all messages for FE God from dynamodb with fetch", async () => {
 
 test('Save history to dynamodb', async () => {
   const res = await SaveHistoryAPI(
-    "FE God", 
+    "FE God",
     listMessages);
   expect(res.data.createGptInteraction.userId).toBe("FE God");
   expect(res.data.createGptInteraction.listMessage.length).toBe(2);

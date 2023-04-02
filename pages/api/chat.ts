@@ -15,8 +15,9 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { model, messages, key, prompt } = (await req.json()) as ChatBody;
 
-    // Save history
+    // Save history///////////////////////////////////////////////////
     await SaveHistoryAPI(Date.now().toString(), messages);
+    //////////////////////////////////////////////////////////////////
 
     await init((imports) => WebAssembly.instantiate(wasm, imports));
     const encoding = new Tiktoken(
