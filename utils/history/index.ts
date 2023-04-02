@@ -1,9 +1,8 @@
 import { Message } from '@/types/chat';
 import { API, graphqlOperation } from 'aws-amplify';
-import { createGptInteraction, initAppsync } from './graphql-ops';
+import { createGptInteraction } from './graphql-ops';
 import { GraphQLResult } from '@aws-amplify/api-graphql';
 
-initAppsync()
 
 export const SaveHistoryAPI = async (
   userId: string,
@@ -24,3 +23,27 @@ export const SaveHistoryAPI = async (
 
   return res.data.createGptInteraction;
 };
+
+
+export const FetchAppsync = async (
+  query: string,
+  variables: any,
+  url: string,
+  apiKey: string,
+) => {
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey
+    },
+    body: JSON.stringify({
+      query: query,
+      variables: variables
+    })
+  });
+  return res;
+}
+
+

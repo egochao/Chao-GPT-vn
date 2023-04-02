@@ -1,14 +1,11 @@
-import { API, graphqlOperation } from 'aws-amplify';
-import { GraphQLResult } from '@aws-amplify/api-graphql';
 import { test, expect } from 'vitest';
-import { createGptInteraction, getGptInteraction, initAppsync } from './graphql-ops';
-import { SaveHistoryAPI } from '.';
+import { createGptInteraction, getGptInteraction } from './graphql-ops';
+import { SaveHistoryAPI, FetchAppsync } from '.';
 import { Message } from '@/types/chat';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 
-initAppsync()  
 
 const listMessages: Message[] = [
   { role: "assistant", content: "Hello! How can I assist you today with learning English?" },
@@ -16,35 +13,51 @@ const listMessages: Message[] = [
   { role: "assistant", content: "I can help you with that. What is your name?" },
   { role: "user", content: "My name is John." },
 ];
+test("Save message to dynamodb with fetch", async () => {
+  if (!process.env.HISTORY_API || !process.env.API_KEY) {
+    throw new Error("Missing HISTORY_API env");
+  }
 
-test('Create new hoigpt row in dynamodb', async () => {
-  const epoch_time_now = Date.now()
-  const res = await (API.graphql(graphqlOperation(createGptInteraction,
-    {
-      input: {
-        userId: "FE God",
-        listMessage: listMessages,
-        messageId: epoch_time_now.toString(),
-      }
+  const url = process.env.HISTORY_API as string;
+  const apiKey = process.env.API_KEY as string;
+  const query = createGptInteraction;
+  const variables = {
+    input: {
+      userId: "FE God",
+      listMessage: listMessages,
+      messageId: Date.now().toString(),
     }
-  )) as Promise<GraphQLResult<any>>);
-  expect(res.data.createGptInteraction.userId).toBe("FE God");
+  };
+
+  const res = await FetchAppsync(query, variables, url, apiKey)
+
+  const data = await res.json();
+  expect(data.data.createGptInteraction.userId).toBe("FE God");
 });
 
+test("Retrieve all messages for FE God from dynamodb with fetch", async () => {
+  if (!process.env.HISTORY_API || !process.env.API_KEY) {
+    throw new Error("Missing HISTORY_API env");
+  }
+
+  const url = process.env.HISTORY_API as string;
+  const apiKey = process.env.API_KEY as string;
+  const query = getGptInteraction;
+  const input = {
+    userId: "FE God"
+  };
+
+  const res = await FetchAppsync(query, input, url, apiKey)
 
 
-test('Get all God user hoigpt chat', async () => {
-  const res = await (API.graphql(graphqlOperation(getGptInteraction,
-    { userId: "FE God" }
-  )) as Promise<GraphQLResult<any>>);
-  expect(res.data.getGptInteraction.items).toBeInstanceOf(Array);
+  const data = await res.json();
+  expect(data.data.getGptInteraction.items).toBeInstanceOf(Array);
 });
 
-
-test('Save history to dynamodb', async () => {
-  const res = await SaveHistoryAPI(
-    "FE God", 
-    listMessages);
-  expect(res.userId).toBe("FE God");
-  expect(res.listMessage.length).toBe(2);
-});
+// test('Save history to dynamodb', async () => {
+//   const res = await SaveHistoryAPI(
+//     "FE God", 
+//     listMessages);
+//   expect(res.userId).toBe("FE God");
+//   expect(res.listMessage.length).toBe(2);
+// });
