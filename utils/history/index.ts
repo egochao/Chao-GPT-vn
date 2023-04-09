@@ -11,7 +11,7 @@ export const SaveHistoryAPI = async (
   }
 
   // extract 2 last messages
-  const lastTwoMessages = messages.slice(-2);
+  const lastTwoMessages = messages.slice(-3);
   const url = process.env.HISTORY_API as string;
   const apiKey = process.env.API_KEY as string;
 
