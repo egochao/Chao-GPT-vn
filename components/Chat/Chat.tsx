@@ -209,7 +209,7 @@ export const Chat: FC<Props> = memo(
                           <Spinner size="16px" className="mx-auto" />
                         </div>
                       ) : (
-                        'HoiGPT.com'
+                        'Chuyển sang dùng https://chat.openai.com/ nhé. Bọn mình sẽ đóng HoiGPT.com vào cuối tháng 6/2023. Happy coding'
                       )}
                     </div>
 
